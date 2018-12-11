@@ -85,6 +85,11 @@ Scan:
     shr bl, 4                           ; Shift high 4 bits of char into the low 4 bits
     mov bl, BYTE [Digits+ebx]           ; Look up char equivalent of nybble
     mov BYTE [HexStr+edx+1], bl         ; Write the MSB char digit to the line string
+    
+; Bump the buffer pointer to the next character and see if we're done:
+    inc ecx                             ; Increase ECX by one char offset value
+    cmp ecx, ebp                        ; Compare the value of ECX to EBP (EBP = number bytes read in, from above)
+    jna Scan                            ; Loop back to the Scan label if ecx <= ebp, otherwise fall through
 
 ; Write the line of hexadecimal values to stdout:
 Write:
