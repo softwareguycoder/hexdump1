@@ -47,7 +47,12 @@ Read:
     mov ebp, eax                        ; Save # of bytes read from the file for later
     cmp eax, EOF                        ; Does EAX contain the value EOF meaning the end of the file has been reached?
     je  Done                            ; Jump If Equal (to 0, from compare)
-
+    
+; Set up the registers for the process-buffer step:
+    mov esi, Buff                       ; Place address of the file buffer into esi
+    mov edi, HexStr                     ; Place address of the line string into edi
+    xor ecx,ecx                         ; Clear line string pointer to 0
+    
 ; Go through the buffer and convert binary values to hex digits
 Scan:
 
