@@ -62,7 +62,11 @@ Scan:
 ; HexStr (the output)
     mov edx, ecx                        ; Copy the value of the character counter into EDX    
     shl edx, 1                          ; Multiply pointer by 2 using left shift
-    add edx, ecx                        ; Complete the multiplication by 3      
+    add edx, ecx                        ; Complete the multiplication by 3
+    
+; Get a character from the buffer and put it into both EAX and EBX:
+    mov al, BYTE [esi+ecx]              ; ESI holds the address of Buff, and ECX the pointer to the current char
+    mov ebx, eax                        ; Copy the current char value into EBX      
 
 ; Write the line of hexadecimal values to stdout:
 Write:
