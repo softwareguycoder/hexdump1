@@ -16,8 +16,10 @@
 BUFFLEN     EQU 16                      ; We read the file 16 bytes at a time.
 SYS_EXIT    EQU 1                       ; INT 80h code for the sys_exit syscall
 SYS_READ    EQU 3                       ; INT 80h code for the sys_read syscall
+SYS_WRITE   EQU 4                       ; INT 80h code for the sys_write syscall
 OK          EQU 0                       ; Exit code meaning program terminated normally
 STDIN       EQU 0                       ; File Descriptor for standard input
+STDOUT      EQU 1                       ; File Descriptor for standard output
 EOF         EQU 0                       ; Value meaning end-of-file reached by sys_read
 
 SECTION .bss                            ; Section containing uninitialized data
@@ -71,10 +73,15 @@ Scan:
 ; Look up low nybble character and insert it into the string:
     and al, 0Fh                         ; Mask out all but the low nybble
     mov al, BYTE [Digits+eax]           ; Look up the ASCII character code equivalent to the nybble
-    mov BYTE [HexStr+edx+2]             ; Write the LSB char digit to the line string      
+    mov BYTE [HexStr+edx+2], al         ; Write the LSB char digit to the line string      
 
 ; Write the line of hexadecimal values to stdout:
 Write:
+    mov eax, SYS_WRITE                  ; Specify sys_write call
+    mov ebx, STDOUT                     ; Specify File Descriptor 1: Standard Output
+    mov ecx, HexStr                     ; Pass address of the Hex string to write
+    mov edx, HEXLEN                     ; Pass the length of the Hex string
+    int 80h                             ; Make kernel call
 
 ; All done!  Let's end this party:
 Done:
