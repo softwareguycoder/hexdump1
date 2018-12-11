@@ -66,7 +66,12 @@ Scan:
     
 ; Get a character from the buffer and put it into both EAX and EBX:
     mov al, BYTE [esi+ecx]              ; ESI holds the address of Buff, and ECX the pointer to the current char
-    mov ebx, eax                        ; Copy the current char value into EBX      
+    mov ebx, eax                        ; Copy the current char value into EBX
+    
+; Look up low nybble character and insert it into the string:
+    and al, 0Fh                         ; Mask out all but the low nybble
+    mov al, BYTE [Digits+eax]           ; Look up the ASCII character code equivalent to the nybble
+    mov BYTE [HexStr+edx+2]             ; Write the LSB char digit to the line string      
 
 ; Write the line of hexadecimal values to stdout:
 Write:
