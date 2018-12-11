@@ -59,6 +59,9 @@ Read:
 Scan:
     xor eax, eax                        ; Clear out the value of EAX
     
+    ; NOTE: We clear out EAX above, so that when we copy a byte value into AL 
+    ; below, the bits above the copied bits are all zeroes
+    
 ; Here we calculate the offset into HexStr, which is the value in ECX, multiplied by 3
 ; Let ECX be the offset into the input buffer, and let EDX be the corresponding offset into
 ; HexStr (the output)
@@ -70,10 +73,18 @@ Scan:
     mov al, BYTE [esi+ecx]              ; ESI holds the address of Buff, and ECX the pointer to the current char
     mov ebx, eax                        ; Copy the current char value into EBX
     
+    ; The thinking here is that EAX will be used for the low nybble, and EBX
+    ; for the higher nybble
+    
 ; Look up low nybble character and insert it into the string:
     and al, 0Fh                         ; Mask out all but the low nybble
     mov al, BYTE [Digits+eax]           ; Look up the ASCII character code equivalent to the nybble
-    mov BYTE [HexStr+edx+2], al         ; Write the LSB char digit to the line string      
+    mov BYTE [HexStr+edx+2], al         ; Write the LSB char digit to the line string  
+    
+; Look up high nybble character and insert it into the string:
+    shr bl, 4                           ; Shift high 4 bits of char into the low 4 bits
+    mov bl, BYTE [Digits+ebx]           ; Look up char equivalent of nybble
+    mov BYTE [HexStr+edx+1], bl         ; Write the MSB char digit to the line string
 
 ; Write the line of hexadecimal values to stdout:
 Write:
