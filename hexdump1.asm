@@ -1,6 +1,6 @@
 ; 
 ; FILENAME:     hexdump1.asm
-; CREATED BY:   ENS Brian Hart
+; CREATED BY:   Brian Hart
 ; DATE:         11 Dec 2018
 ; PURPOSE:      Demonstrates dumping hex values to the console in Linux
 ;
