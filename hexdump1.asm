@@ -51,10 +51,18 @@ Read:
 ; Set up the registers for the process-buffer step:
     mov esi, Buff                       ; Place address of the file buffer into esi
     mov edi, HexStr                     ; Place address of the line string into edi
-    xor ecx,ecx                         ; Clear line string pointer to 0
+    xor ecx, ecx                        ; Clear line string pointer, in ECX, to 0
     
 ; Go through the buffer and convert binary values to hex digits
 Scan:
+    xor eax, eax                        ; Clear out the value of EAX
+    
+; Here we calculate the offset into HexStr, which is the value in ECX, multiplied by 3
+; Let ECX be the offset into the input buffer, and let EDX be the corresponding offset into
+; HexStr (the output)
+    mov edx, ecx                        ; Copy the value of the character counter into EDX    
+    shl edx, 1                          ; Multiply pointer by 2 using left shift
+    add edx, ecx                        ; Complete the multiplication by 3      
 
 ; Write the line of hexadecimal values to stdout:
 Write:
