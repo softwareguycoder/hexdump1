@@ -1,19 +1,19 @@
-; Executable name : hexdump1
-; Version         : 1.0
-; Created date    : 12 Dec 2018
-; Last update     : 12 Dec 2018
-; Author          : Brian Hart
-; Description     : A simple program in assembly for Linux, using NASM, demonstrating
+;  Executable name : hexdump1
+;  Version         : 1.0
+;  Created date    : 12 Dec 2018
+;  Last update     : 12 Dec 2018
+;  Author          : Brian Hart
+;  Description     : A simple program in assembly for Linux, using NASM, demonstrating
 ;                   the conversion of binary values to hexadecimal strings.  It acts as
 ;                   a very simple hex dump utility for files, though without the ASCII
 ;                   equivalent column.
 ;
-;   Run it this way:
-;      hexdump1 < (input file)
+;  Run it this way:
+;    hexdump1 < (input file)
 ;   
-;   Build using these commands:
-;       nasm -f elf64 -g -F stabs hexdump1.asm
-;       ld -o hexdump1 hexdump1.o
+;  Build using these commands:
+;     nasm -f elf64 -g -F stabs hexdump1.asm
+;     ld -o hexdump1 hexdump1.o
 ;
 
 BUFFLEN     EQU 16                  ; We read the file BUFFLEN bytes at a time
