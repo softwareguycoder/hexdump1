@@ -19,4 +19,11 @@ Given a numeric value in a register
 Convert it into the ASCII character codes necessary to display it as a string
 Write the string to standard output
 ```
+### Limitations of this program
 
+This program does not handle certain edge cases, such as:
+* Number of bytes in file is not a multiple of 16
+* Overwrites the final newline in `HexStr` with whatever is in the file
+  since it does a `jna` and not a `jb` when deciding whether to keep looping
+
+These limitations will be adddressed in the next version (hopefully).
