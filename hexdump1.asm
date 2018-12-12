@@ -82,7 +82,7 @@ Scan:
 ; Look up low nybble character and insert it into the string:
     and al, 0Fh                     ; Mask out all but the low nybble
     mov al, BYTE [Digits+eax]       ; Look up the char equivalent of nybble
-    mov BYTE [HexSstr+edx+2], al    ; Write LSB char digit to line string
+    mov BYTE [HexStr+edx+2], al    ; Write LSB char digit to line string
     
 ; Look up high nybble character and insert it into the string:
     shr bl, 4                       ; Shift high 4 bits of char into low 4 bits
